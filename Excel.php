@@ -2,10 +2,6 @@
 
 use Maatwebsite\Excel\Facades\Excel as _Excel;
 
-/**
- * Trait Excel
- * @require "maatwebsite/excel": ">=3.0"
- */
 trait Excel
 {
     public function import($file, $title = false)

@@ -3,6 +3,12 @@
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
+/**
+ * @class Log
+ * @version 1.0.0
+ * @author LuminEe
+ * @date 2019-11-07
+ */
 class Log
 {
     protected $path;

@@ -4,6 +4,12 @@ use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 
+/**
+ * @class Phpunit/Output
+ * @version 1.0.0
+ * @author LuminEe
+ * @date 2019-11-07
+ */
 class Output
 {
     /**

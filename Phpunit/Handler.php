@@ -2,6 +2,12 @@
 
 use Symfony\Component\Console\Output\ConsoleOutput;
 
+/**
+ * @class Phpunit/Handler
+ * @version 1.0.0
+ * @author LuminEe
+ * @date 2019-11-07
+ */
 trait Handler
 {
     /**

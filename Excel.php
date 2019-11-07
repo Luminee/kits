@@ -2,6 +2,12 @@
 
 use Maatwebsite\Excel\Facades\Excel as _Excel;
 
+/**
+ * @class Excel
+ * @version 1.0.0
+ * @author LuminEe
+ * @date 2019-11-07
+ */
 trait Excel
 {
     public function import($file, $title = false)

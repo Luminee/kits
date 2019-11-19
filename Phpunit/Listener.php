@@ -4,7 +4,7 @@ use Carbon\Carbon;
 
 /**
  * @class Phpunit/Listener
- * @version 1.0.0
+ * @version 1.0.1
  * @author LuminEe
  * @date 2019-11-07
  */
@@ -24,6 +24,11 @@ class Listener
      * @var array $failPond
      */
     protected $failPond = [];
+    
+    /**
+     * @var array $ignoreTables
+     */
+    protected $ignoreTables = [];
 
     /**
      * @param $query
@@ -53,6 +58,7 @@ class Listener
     {
         $query = \DB::getPdo()->query("explain " . $sql);
         foreach ($query as $k => $row) {
+            if (in_array($row['table'], $this->ignoreTables)) continue;
             $this->checkType($row['type'], $key);
             $this->checkKey($row['key'], $key);
             $this->checkRows($row['rows'], $key);

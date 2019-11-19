@@ -26,18 +26,20 @@ class Listener
     protected $failPond = [];
     
     /**
-     * @var array $ignoreTables
+     * @var string $dbName
      */
-    protected $ignoreTables = [];
+    protected $dbName = '';
 
     /**
      * @param $query
      * @param $bindings
      * @param $time
+     * @param $dbName = ''
      */
-    public function analyzeSQL($query, $bindings, $time)
+    public function analyzeSQL($query, $bindings, $time, $dbName = '')
     {
         $sql = $this->prepareToSql($query, $bindings);
+        $this->dbName = $dbName;
         $_key = str_replace('.', '', microtime(true));
         if ($time > 3000)
             $this->slowPond[$_key] = ['query' => $sql, 'time' => $time];
@@ -58,7 +60,7 @@ class Listener
     {
         $query = \DB::getPdo()->query("explain " . $sql);
         foreach ($query as $k => $row) {
-            if (in_array($row['table'], $this->ignoreTables)) continue;
+            if ($this->getTableRows($row['table']) < 10000) continue;
             $this->checkType($row['type'], $key);
             $this->checkKey($row['key'], $key);
             $this->checkRows($row['rows'], $key);
@@ -91,6 +93,12 @@ class Listener
         if ($rows > 1000000) return 4;
         if ($rows > 100000) return 3;
         return 2;
+    }
+    
+    protected function getTableRows($table)
+    {
+        $query = \DB::getPdo()->query("SELECT TABLE_ROWS FROM information_schema.TABLES WHERE TABLE_SCHEMA = '" . $this->dbName . "' AND TABLE_NAME = '$table'");
+        return $query->fetchAll()[0]['TABLE_ROWS'];
     }
 
     protected function prepareToSql($query, $binding)

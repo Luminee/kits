@@ -75,22 +75,23 @@ class Import implements ToArray
     }
 }
 
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\WithTitle;
+use Maatwebsite\Excel\Concerns\FromCollection;
 
 class Export implements FromCollection, WithTitle
 {
     protected $data;
     protected $title;
 
-    public function __construct($data, $title = '')
+    public function __construct($data, $title = 'Sheet 1')
     {
         $this->data = collect($data);
         $this->title = $title;
     }
 
     /**
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     public function collection()
     {
